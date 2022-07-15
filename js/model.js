@@ -1,7 +1,8 @@
-// Data
+const welcome = document.querySelector('.welcome');
 
+// Data
 const account1 = {
-  owner: 'Jacob Doe',
+  owner: 'Jacob Soe',
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
@@ -54,7 +55,9 @@ const account4 = {
 
 export const accounts = [account1, account2, account3, account4];
 
-//Creating usernames for each account
+let currentUser;
+
+//1)Creating usernames for each account
 export const createUsername = function () {
   accounts.map(function (acc) {
     return (acc.username = acc.owner
@@ -64,4 +67,17 @@ export const createUsername = function () {
       })
       .join(''));
   });
+};
+
+//2)Creation of login and current user
+export const login = function (username, pin) {
+  currentUser = accounts.find(acc => acc.username === username);
+
+  if (currentUser.pin === +pin) {
+    return currentUser.owner;
+  } else {
+    welcome.textContent = 'Invalid password :(';
+    welcome.style.color = 'red';
+    return;
+  }
 };
