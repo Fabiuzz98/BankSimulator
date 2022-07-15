@@ -21,7 +21,7 @@ const account1 = {
 };
 
 const account2 = {
-  owner: 'Jessica Travis',
+  owner: 'Jessica Dravis',
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
@@ -55,7 +55,7 @@ const account4 = {
 
 export const accounts = [account1, account2, account3, account4];
 
-let currentUser;
+export let currentUser;
 
 //1)Creating usernames for each account
 export const createUsername = function () {
@@ -69,7 +69,7 @@ export const createUsername = function () {
   });
 };
 
-//2)Creation of login and current user
+//2)Creation of login, current user and Show account movements
 export const login = function (username, pin) {
   currentUser = accounts.find(acc => acc.username === username);
 
@@ -80,4 +80,40 @@ export const login = function (username, pin) {
     welcome.style.color = 'red';
     return;
   }
+};
+
+//3)Transfer money feature
+const amountSentField = document.querySelector('.form__input--amount');
+const toField = document.querySelector('.form__input--to');
+
+export const transferMoney = function (receiver, amount) {
+  const moneyReceiver = accounts.find(function (acc) {
+    return acc.username === receiver;
+  });
+
+  const currentUserTotalMoney = currentUser.movements.reduce(function (
+    beginningValue,
+    mov
+  ) {
+    return (beginningValue = mov + beginningValue);
+  },
+  0);
+
+  if (
+    !moneyReceiver ||
+    amount <= 0 ||
+    moneyReceiver.username === currentUser.username ||
+    amount >= currentUserTotalMoney
+  )
+    return;
+
+  moneyReceiver.movements.push(+amount);
+  moneyReceiver.movementsDates.push(new Date());
+  currentUser.movements.push(-amount);
+  currentUser.movementsDates.push(new Date());
+
+  console.log(currentUser);
+
+  amountSentField.value = '';
+  toField.value = '';
 };
