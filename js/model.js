@@ -1,8 +1,3 @@
-'use strict';
-
-/////////////////////////////////////////////////
-// BANKIST APP
-
 // Data
 
 const account1 = {
