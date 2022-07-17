@@ -4,7 +4,6 @@ const welcome = document.querySelector('.welcome');
 const account1 = {
   owner: 'Jacob Soe',
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
-  interestRate: 1.2, // %
   pin: 1111,
   movementsDates: [
     '2019-11-18T21:31:17.178Z',
@@ -23,7 +22,6 @@ const account1 = {
 const account2 = {
   owner: 'Jessica Dravis',
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
-  interestRate: 1.5,
   pin: 2222,
   movementsDates: [
     '2019-11-01T13:15:33.035Z',
@@ -42,7 +40,6 @@ const account2 = {
 const account3 = {
   owner: 'Steven Thomas Williams',
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
-  interestRate: 0.7,
   pin: 3333,
   movementsDates: [
     '2019-11-01T13:15:33.035Z',
@@ -61,7 +58,6 @@ const account3 = {
 const account4 = {
   owner: 'Sarah Smith',
   movements: [430, 1000, 700, 50, 90],
-  interestRate: 1,
   pin: 4444,
   movementsDates: [
     '2019-11-01T13:15:33.035Z',
@@ -81,7 +77,7 @@ export const accounts = [account1, account2, account3, account4];
 
 export let currentUser;
 
-//1)Creating usernames for each account
+//Creating usernames for each account
 export const createUsername = function () {
   accounts.map(function (acc) {
     return (acc.username = acc.owner
@@ -93,7 +89,7 @@ export const createUsername = function () {
   });
 };
 
-//2)Creation of login, current user and Show account movements
+//Creation of login, current user and Show account movements
 export const login = function (username, pin) {
   currentUser = accounts.find(acc => acc.username === username);
 
@@ -108,7 +104,7 @@ export const login = function (username, pin) {
   }
 };
 
-//3)Transfer money feature
+//Transfer money feature
 export const transferMoney = function (receiver, amount) {
   const moneyReceiver = accounts.find(function (acc) {
     return acc.username === receiver;
@@ -136,7 +132,7 @@ export const transferMoney = function (receiver, amount) {
   currentUser.movementsDates.push(new Date());
 };
 
-//4)Request loan feature
+//Request loan feature
 export const sendLoan = function (loanAmount) {
   console.log(loanAmount);
 
@@ -147,11 +143,9 @@ export const sendLoan = function (loanAmount) {
 
   currentUser.movements.push(+loanAmount);
   currentUser.movementsDates.push(new Date());
-
-  return currentUser;
 };
 
-//5)Close account
+//Close account
 export const closeAccount = function (user, pin) {
   console.log(user, pin);
 
@@ -160,4 +154,36 @@ export const closeAccount = function (user, pin) {
 
     accounts.splice(index, 1); //Delete account
   }
+};
+
+//Logout timer
+const loggedInterface = document.querySelector('.app');
+const timerSlot = document.querySelector('.timer');
+export const startLogoutCounter = function () {
+  const counter = '05:01';
+
+  let minutes = +counter.split(':')[0];
+  let seconds = +counter.split(':')[1];
+
+  const timer = function () {
+    seconds--;
+
+    if (seconds === 0) {
+      seconds = 59;
+      minutes--;
+    }
+    if (minutes === -1) {
+      clearInterval(timerInterval);
+      timerSlot.textContent = '00:00';
+      loggedInterface.style.opacity = 0;
+    } else {
+      timerSlot.textContent = `${String(minutes).padStart(2, 0)}:${String(
+        seconds
+      ).padStart(2, 0)}`;
+    }
+  };
+
+  const timerInterval = setInterval(timer, 1000);
+
+  return timerInterval;
 };

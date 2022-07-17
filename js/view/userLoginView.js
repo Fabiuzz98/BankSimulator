@@ -16,8 +16,40 @@ const confirmPin = document.querySelector('.form__input--pin');
 const closeAccountBtn = document.querySelector('.form__btn--close');
 const incomes = document.querySelector('.summary__value--in');
 const outcomes = document.querySelector('.summary__value--out');
+const btnSort = document.querySelector('.btn--sort');
+
+let switchz = false;
+
+// let timer;
 
 class userLoginView {
+  // startLogoutCounter = function () {
+  //   const counter = '01:01';
+  //   let lastCounter = 9000;
+
+  //   let minutes = +counter.split(':')[0];
+  //   let seconds = +counter.split(':')[1];
+
+  //   const timer = function () {
+  //     seconds--;
+  //     if (seconds === 0) {
+  //       seconds = 10;
+  //       minutes--;
+  //       if (minutes === 0) {
+  //         setTimeout(() => {
+  //           console.log('logout');
+  //           clearInterval(timerInterval);
+  //         }, lastCounter);
+  //       }
+  //     }
+  //     console.log(minutes, seconds);
+  //   };
+
+  //   const timerInterval = setInterval(timer, 1000);
+
+  //   return timerInterval;
+  // };
+
   takeUserLogindata(handler) {
     loginBtn.addEventListener('click', function (e) {
       e.preventDefault();
@@ -38,7 +70,7 @@ class userLoginView {
 
     username.value = '';
     pin.value = '';
-    // loggedInterface.style.opacity = 1; --> set in style this one at 0
+    loggedInterface.style.opacity = 1;
   }
 
   changeLogindate(currentUser) {
@@ -102,7 +134,12 @@ class userLoginView {
       return (beginningValue = mov + beginningValue);
     }, 0);
 
-    totalAmount.textContent = `${amount}€`;
+    const totalAmountFormatted = new Intl.NumberFormat(currentUser.locale, {
+      style: 'currency',
+      currency: currentUser.currency,
+    }).format(amount);
+
+    totalAmount.textContent = totalAmountFormatted;
 
     const totalIncome = currentUser.movements
       .filter(mov => mov > 0)
@@ -170,6 +207,35 @@ class userLoginView {
       // loggedInterface.style.opacity = 0;
       welcome.textContent = 'Log in to get started';
     });
+  }
+
+  //Sorting functions
+  sortButtonHandler(handler) {
+    btnSort.addEventListener('click', function (e) {
+      e.preventDefault();
+      switchz = !switchz;
+      handler();
+    });
+  }
+
+  sortMovements(currentUser) {
+    if (switchz) {
+      let sortedMovementsArray = [...currentUser.movements];
+      sortedMovementsArray.sort(function (a, b) {
+        return a - b;
+      });
+
+      const userObj = {
+        movements: sortedMovementsArray,
+        movementsDates: currentUser.movementsDates,
+        currency: currentUser.currency,
+        locale: currentUser.locale,
+      };
+
+      return userObj;
+    } else {
+      return currentUser;
+    }
   }
 }
 export default new userLoginView();
