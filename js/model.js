@@ -93,8 +93,6 @@ export const createUsername = function () {
 export const login = function (username, pin) {
   currentUser = accounts.find(acc => acc.username === username);
 
-  console.log(currentUser);
-
   if (currentUser.pin === +pin) {
     return currentUser.owner;
   } else {
@@ -134,8 +132,6 @@ export const transferMoney = function (receiver, amount) {
 
 //Request loan feature
 export const sendLoan = function (loanAmount) {
-  console.log(loanAmount);
-
   //If there is at least one movement higher than 10% of the requested loan
   const isAccepted = currentUser.movements.some(mov => mov > +loanAmount * 0.1);
 
@@ -147,8 +143,6 @@ export const sendLoan = function (loanAmount) {
 
 //Close account
 export const closeAccount = function (user, pin) {
-  console.log(user, pin);
-
   if (user.trim() === currentUser.username && +pin === currentUser.pin) {
     const index = accounts.findIndex(acc => acc.username === user);
 

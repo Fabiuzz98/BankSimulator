@@ -20,36 +20,7 @@ const btnSort = document.querySelector('.btn--sort');
 
 let switchz = false;
 
-// let timer;
-
 class userLoginView {
-  // startLogoutCounter = function () {
-  //   const counter = '01:01';
-  //   let lastCounter = 9000;
-
-  //   let minutes = +counter.split(':')[0];
-  //   let seconds = +counter.split(':')[1];
-
-  //   const timer = function () {
-  //     seconds--;
-  //     if (seconds === 0) {
-  //       seconds = 10;
-  //       minutes--;
-  //       if (minutes === 0) {
-  //         setTimeout(() => {
-  //           console.log('logout');
-  //           clearInterval(timerInterval);
-  //         }, lastCounter);
-  //       }
-  //     }
-  //     console.log(minutes, seconds);
-  //   };
-
-  //   const timerInterval = setInterval(timer, 1000);
-
-  //   return timerInterval;
-  // };
-
   takeUserLogindata(handler) {
     loginBtn.addEventListener('click', function (e) {
       e.preventDefault();
@@ -74,7 +45,6 @@ class userLoginView {
   }
 
   changeLogindate(currentUser) {
-    console.log(currentUser);
     const date = new Date().toLocaleDateString(currentUser.locale, {
       year: 'numeric',
       month: 'long',
@@ -85,7 +55,6 @@ class userLoginView {
   }
 
   showMovements(currentUser) {
-    console.log(currentUser);
     movements.innerHTML = '';
 
     currentUser.movements.forEach((movement, i) => {
@@ -128,8 +97,6 @@ class userLoginView {
   }
 
   calculateTotalAmount(currentUser) {
-    console.log(currentUser.movements);
-
     const amount = currentUser.movements.reduce(function (beginningValue, mov) {
       return (beginningValue = mov + beginningValue);
     }, 0);
@@ -147,14 +114,10 @@ class userLoginView {
         return (beginningValue = currentMov + beginningValue);
       }, 0);
 
-    console.log(totalIncome);
-
     const totalIncomeFormatted = new Intl.NumberFormat(currentUser.locale, {
       style: 'currency',
       currency: currentUser.currency,
     }).format(totalIncome);
-
-    console.log(totalIncomeFormatted);
 
     incomes.textContent = totalIncomeFormatted;
 
