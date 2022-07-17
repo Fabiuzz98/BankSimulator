@@ -44,6 +44,18 @@ const account3 = {
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
+  movementsDates: [
+    '2019-11-01T13:15:33.035Z',
+    '2019-11-30T09:48:16.867Z',
+    '2019-12-25T06:04:23.907Z',
+    '2020-01-25T14:18:46.235Z',
+    '2020-02-05T16:33:06.386Z',
+    '2020-04-10T14:43:26.374Z',
+    '2020-06-25T18:49:59.371Z',
+    '2020-07-26T12:01:20.894Z',
+  ],
+  currency: 'USD',
+  locale: 'it-IT',
 };
 
 const account4 = {
@@ -51,6 +63,18 @@ const account4 = {
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
+  movementsDates: [
+    '2019-11-01T13:15:33.035Z',
+    '2019-11-30T09:48:16.867Z',
+    '2019-12-25T06:04:23.907Z',
+    '2020-01-25T14:18:46.235Z',
+    '2020-02-05T16:33:06.386Z',
+    '2020-04-10T14:43:26.374Z',
+    '2020-06-25T18:49:59.371Z',
+    '2020-07-26T12:01:20.894Z',
+  ],
+  currency: 'USD',
+  locale: 'en-US',
 };
 
 export const accounts = [account1, account2, account3, account4];
@@ -73,6 +97,8 @@ export const createUsername = function () {
 export const login = function (username, pin) {
   currentUser = accounts.find(acc => acc.username === username);
 
+  console.log(currentUser);
+
   if (currentUser.pin === +pin) {
     return currentUser.owner;
   } else {
@@ -83,9 +109,6 @@ export const login = function (username, pin) {
 };
 
 //3)Transfer money feature
-const amountSentField = document.querySelector('.form__input--amount');
-const toField = document.querySelector('.form__input--to');
-
 export const transferMoney = function (receiver, amount) {
   const moneyReceiver = accounts.find(function (acc) {
     return acc.username === receiver;
@@ -111,9 +134,30 @@ export const transferMoney = function (receiver, amount) {
   moneyReceiver.movementsDates.push(new Date());
   currentUser.movements.push(-amount);
   currentUser.movementsDates.push(new Date());
+};
 
-  console.log(currentUser);
+//4)Request loan feature
+export const sendLoan = function (loanAmount) {
+  console.log(loanAmount);
 
-  amountSentField.value = '';
-  toField.value = '';
+  //If there is at least one movement higher than 10% of the requested loan
+  const isAccepted = currentUser.movements.some(mov => mov > +loanAmount * 0.1);
+
+  if (!isAccepted) return;
+
+  currentUser.movements.push(+loanAmount);
+  currentUser.movementsDates.push(new Date());
+
+  return currentUser;
+};
+
+//5)Close account
+export const closeAccount = function (user, pin) {
+  console.log(user, pin);
+
+  if (user.trim() === currentUser.username && +pin === currentUser.pin) {
+    const index = accounts.findIndex(acc => acc.username === user);
+
+    accounts.splice(index, 1); //Delete account
+  }
 };

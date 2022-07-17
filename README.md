@@ -5,6 +5,7 @@ This app is fully built with Javascript using the MVC architecture and the publi
 DESCRIPTION OF THE APP: <br>
 This app is intended to be a bank simulator for users that have already created their bank account. Indeed, given an array of pre-filled users, the app automatically creates a username based on the account owner name that in addition to the provided pin, allows to login (I will provide below some users credentials). <br>
 At this point the user can access the private bank interface where is possible to transfer money between accounts, create a loan and close the account. <br>
+Each account is set with different nationality, language and currency, hence the app also shows date and currency formats based on the nationality of each acccount<br>
 To make it realistic, I've provided 4 user accounts as if they have already created a profile so it's possible to login with a username (thanks to the auto created username feature) and interact between accounts. The accounts are the following so you can try yourself: <br>
 1)username: js, pin: 1111 <br>
 2)username: jd, pin: 2222 <br>
