@@ -1,5 +1,3 @@
-(...currently working on this app...)
-
 BUILT WITH: <br>
 This app is fully built with Javascript using the MVC architecture and the publisher-subscriber pattern <br> <br>
 DESCRIPTION OF THE APP: <br>
@@ -12,7 +10,7 @@ To make it realistic, I've provided 4 user accounts as if they have already crea
 3)username: stw, pin: 3333 <br>
 4)username: ss, pin: 4444 <br>
 Once you login with one of the following accounts, you can experiment transfering money between them and if you switch account you will see the changes shown on the movements list, total money amount, date of each movement and everything related to the type of action the user does on the account. <br>
-The app is also provided with a timer that starts at login and will automatically logout if no actions are committed within the timer
+The app is also provided with a timer that starts at login and will automatically logout the user if no actions are committed within the timer or another login is done.
 <br> <br>
 MORE ABOUT THE APP: <br>
 This app is implemented with a lot of Javascript features, array methods, dates, timers, DOM manipulation and much more. I've used the MVC architecture to create a leaner and more readable code. In addition I've used the Pub/Sub pattern to call functions between View and Controller.
